@@ -194,31 +194,33 @@ router.post(version + 'no-evidence-reason', function (req, res) {
 
 /// Evidence - income question
 router.post(version + 'evidence-income', function (req, res) {
-    res.redirect(version + 'do-they-have-evidence-capital');
+    res.redirect(version + 'do-they-have-evidence-expenditure');
   });
 
-// Do they have evidence of capital and expenditure question
-router.post(version + 'evidence-capital-answer', function (req, res) {
+// Do they have evidence of expenditure question
+router.post(version + 'do-they-have-evidence-expenditure-answer', function (req, res) {
   if (req.session.data['expenditure'] == "Yes")
     {
       res.redirect(version + 'evidence-expenditure')
-    } else if (req.session.data['capital'] == "Yes") {
+    } else {
+      res.redirect(version + 'do-they-have-evidence-capital')
+    }
+})
+
+/// Evidence - expenditure question
+router.post(version + 'evidence-expenditure', function (req, res) {
+    res.redirect(version + 'do-they-have-evidence-capital');
+  });
+
+// Do they have evidence of capital question
+router.post(version + 'do-they-have-evidence-capital-answer', function (req, res) {
+  if (req.session.data['capital'] == "Yes")
+    {
       res.redirect(version + 'evidence-capital')
     } else {
       res.redirect(version + 'check-answers-evidence')
     }
 })
-
-// Evidence - expenditure question
-router.post(version + 'evidence-expenditure', function (req, res) {
-    if (req.session.data['capital'] = "Yes")
-    {
-      res.redirect(version + 'evidence-capital')
-    } else {
-      res.redirect(version + 'check-answers-evidence')
-    }
-  });
-
 
 // Evidence - capital question
 router.post(version + 'evidence-capital', function (req, res) {
@@ -230,7 +232,6 @@ router.post(version + 'check-answers-evidence', function (req, res) {
     req.session.data['evidenceComplete'] = true;
     res.redirect(version + 'task-list-means-complete');
   });
-
 // Client declaration
 router.post(version + 'client-declaration', function (req, res) {
     res.redirect(version + 'task-list-means-complete');
